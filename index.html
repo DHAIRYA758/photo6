@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Image Extractor Uploader</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to right, #4e54c8, #8f94fb);
+      color: white;
+      text-align: center;
+      padding: 2rem;
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    h1 {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      animation: slideDown 1s ease-in-out;
+    }
+
+    input[type="file"] {
+      padding: 1rem;
+      background: white;
+      color: black;
+      border: none;
+      border-radius: 12px;
+      font-size: 1rem;
+      margin-bottom: 1.5rem;
+      transition: transform 0.2s ease;
+    }
+
+    input[type="file"]:hover {
+      transform: scale(1.05);
+    }
+
+    .gallery {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: center;
+      margin-top: 2rem;
+    }
+
+    .gallery img {
+      width: 200px;
+      height: auto;
+      border-radius: 15px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+      transition: transform 0.3s ease;
+    }
+
+    .gallery img:hover {
+      transform: scale(1.05);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; } to { opacity: 1; }
+    }
+
+    @keyframes slideDown {
+      from { transform: translateY(-20px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+  <h1>📸 Upload Your Images</h1>
+  <input type="file" id="imageInput" accept="image/*" multiple />
+  <div class="gallery" id="gallery"></div>
+
+  <script>
+    const input = document.getElementById('imageInput');
+    const gallery = document.getElementById('gallery');
+
+    input.addEventListener('change', function () {
+      gallery.innerHTML = '';
+      for (let file of input.files) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          const img = document.createElement('img');
+          img.src = e.target.result;
+          gallery.appendChild(img);
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+  </script>
+</body>
+</html>
